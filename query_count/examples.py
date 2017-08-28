@@ -1,6 +1,9 @@
 import random
 
-from django.db.models import Prefetch
+from django.db.models import (
+    Count,
+    Prefetch,
+)
 from faker import Faker
 
 from query_count.models import (
@@ -124,3 +127,21 @@ def following_reverse_fk__prefetch_related__select_related():
 
             for blog_post in author.blogpost_set.all():
                 print(blog_post.title, '||', blog_post.blog.name)
+
+
+@rollback
+def related_object_count():
+    create_blog_posts(300)
+
+    with count_queries():
+        for author in Author.objects.all():
+            print(author.name, '||', author.blogpost_set.count())
+
+
+@rollback
+def related_object_count__annotation():
+    create_blog_posts(300)
+
+    with count_queries():
+        for author in Author.objects.annotate(blogpost_count=Count('blogpost')):
+            print(author.name, '||', author.blogpost_count)
