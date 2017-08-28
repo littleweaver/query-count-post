@@ -2,6 +2,7 @@ import random
 
 from django.db.models import (
     Count,
+    F,
     Prefetch,
 )
 from faker import Faker
@@ -176,3 +177,25 @@ def bulk_create__bulk_create():
             for x in range(300)
         ]
         BlogPost.objects.bulk_create(posts)
+
+
+@rollback
+def update_field_value():
+    Blog.objects.create(name=' '.join(fake.words(2)))
+
+    with count_queries():
+        blog = Blog.objects.get()
+        blog.likes = blog.likes + 1
+        blog.save()
+
+
+@rollback
+def update_field_value__f():
+    blog = Blog.objects.create(name=' '.join(fake.words(2)))
+
+    with count_queries():
+        Blog.objects.filter(
+            id=blog.id,
+        ).update(
+            likes=F('likes') + 1,
+        )

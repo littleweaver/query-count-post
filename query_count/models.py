@@ -11,10 +11,11 @@ class Author(models.Model):
 
 class Blog(models.Model):
     name = models.CharField(max_length=100)
+    likes = models.IntegerField(default=0)
 
 
 class BlogPost(models.Model):
     title = models.CharField(max_length=100)
     blog = models.ForeignKey(Blog, related_name='posts')
     author = models.ForeignKey(Author)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, blank=True)
