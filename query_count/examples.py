@@ -145,3 +145,34 @@ def related_object_count__annotation():
     with count_queries():
         for author in Author.objects.annotate(blogpost_count=Count('blogpost')):
             print(author.name, '||', author.blogpost_count)
+
+
+@rollback
+def bulk_create():
+    blog = Blog.objects.create(name=' '.join(fake.words(2)))
+    author = Author.objects.create(name=fake.name())
+
+    with count_queries():
+        for x in range(300):
+            BlogPost.objects.create(
+                title=' '.join(fake.words(5)),
+                blog=blog,
+                author=author,
+            )
+
+
+@rollback
+def bulk_create__bulk_create():
+    blog = Blog.objects.create(name=' '.join(fake.words(2)))
+    author = Author.objects.create(name=fake.name())
+
+    with count_queries():
+        posts = [
+            BlogPost(
+                title=' '.join(fake.words(5)),
+                blog=blog,
+                author=author,
+            )
+            for x in range(300)
+        ]
+        BlogPost.objects.bulk_create(posts)
