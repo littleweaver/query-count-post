@@ -1,5 +1,0 @@
-django==1.11.4
-faker==0.7.18
-python-dateutil==2.6.1
-pytz==2017.2
-six==1.10.0

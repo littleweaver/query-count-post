@@ -1,0 +1,32 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "27e4f05cbf894b93a70c7f835696ae3ce3b6693dc89b5a4d751484485e7e6771"
+        },
+        "requires": {},
+        "sources": [
+            {
+                "url": "https://pypi.python.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "django": {
+            "version": "==1.11.4"
+        },
+        "faker": {
+            "version": "==0.7.18"
+        },
+        "python-dateutil": {
+            "version": "==2.6.1"
+        },
+        "pytz": {
+            "version": "==2017.2"
+        },
+        "six": {
+            "version": "==1.10.0"
+        }
+    },
+    "develop": {}
+}
