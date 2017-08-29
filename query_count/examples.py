@@ -199,3 +199,26 @@ def update_field_value__f():
         ).update(
             likes=F('likes') + 1,
         )
+
+
+@rollback
+def reuse_querysets():
+    create_blog_posts(1)
+
+    with count_queries():
+        if Blog.objects.all():
+            print('There are blogs!')
+            for blog in Blog.objects.all():
+                print(blog.name)
+
+
+@rollback
+def reuse_querysets__reuse():
+    create_blog_posts(1)
+
+    with count_queries():
+        blogs = Blog.objects.all()
+        if blogs:
+            print('There are blogs!')
+            for blog in blogs:
+                print(blog.name)
